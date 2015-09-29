@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry exported="true" kind="lib" path="lib/ApacheCommons/commons-lang3-3.4/commons-lang3-3.4-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/ApacheCommons/commons-lang3-3.4/commons-lang3-3.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/jcl-over-slf4j-1.7.12-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/jcl-over-slf4j-1.7.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/jul-to-slf4j-1.7.12-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/jul-to-slf4j-1.7.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/log4j-over-slf4j-1.7.12-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/log4j-over-slf4j-1.7.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/osgi-over-slf4j-1.7.12-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/osgi-over-slf4j-1.7.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/slf4j-api-1.7.12-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/slf4j-api-1.7.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/slf4j-ext-1.7.12-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/slf4j-ext-1.7.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-1.7.12/slf4j-1.7.12/slf4j-migrator-1.7.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/guava-18.0.jar"/>
+	<classpathentry kind="lib" path="lib/pircbotx-2.1-20150907.081430-142.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
