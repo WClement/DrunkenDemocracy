@@ -7,30 +7,37 @@ public abstract class ChatCommand {
 	// all commands have a reference to their receiver
 	// through the superclass
 	private CommandReceiver receiver;
-	private String rawText;
-	/*
-	public ChatCommand(CommandReceiver receiver) {
-		this.receiver = receiver;
-	}
-	*/
+	private String suffix;
+	private CommandEnum myEnum;
 	
-	public ChatCommand(String rawText) {
-		this.rawText = rawText;
+	public ChatCommand(String suffix, CommandEnum myEnum) {
+		this.setMyEnum(myEnum);
+		this.suffix = suffix;
 	}
 	
-	protected String getRawText() {
-		return rawText;
+	public String getSuffix() {
+		return suffix;
 	}
 	
 	protected CommandReceiver getReceiver() {
 		return receiver;
 	}
 	
-	protected void setReceiver(CommandReceiver receiver) {
+	public void setReceiver(CommandReceiver receiver) {
 		this.receiver = receiver;
 	}
 	
-	public abstract void execute();
-	public abstract String getRawCommand();
+	
+	public void execute() {
+		this.getReceiver().gameAction(this);
+	}
+
+	public CommandEnum getMyEnum() {
+		return myEnum;
+	}
+
+	public void setMyEnum(CommandEnum myEnum) {
+		this.myEnum = myEnum;
+	}
 
 }

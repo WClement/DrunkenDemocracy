@@ -20,8 +20,11 @@ public class Controller {
 	}
 	
 	public void issueCommand(ChatCommand cmd) {
-		System.out.println(cmd.getRawCommand());
 		myGame.receiveCommand(cmd);
+	}
+	
+	public void sendChatMessage(String msg) {
+		myBot.sendMessage(msg);
 	}
 
 }
