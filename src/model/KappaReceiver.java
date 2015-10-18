@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Queue;
-
 import controller.ChatCommand;
 
 public class KappaReceiver extends CommandReceiver {
