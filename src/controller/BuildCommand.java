@@ -2,22 +2,8 @@ package controller;
 
 public class BuildCommand extends ChatCommand {
 
-	
-	
-	public BuildCommand(String rawText) {
-		super(rawText);
+	public BuildCommand(String suffix, CommandEnum myEnum) {
+		super(suffix, myEnum);
+		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public String getRawCommand() {
-		// TODO Auto-generated method stub
-		return super.getRawText();
-	}
-
 }

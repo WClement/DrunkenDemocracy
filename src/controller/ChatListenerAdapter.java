@@ -54,8 +54,6 @@ public class ChatListenerAdapter extends ListenerAdapter{
 	
 	public void setBot(ChannelBot myBot) {
 		this.myBot = myBot;
-		kreyReceiver = new KreygasmReceiver(myBot);
-
 		setUpLog();
 	}
 	

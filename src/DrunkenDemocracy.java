@@ -8,13 +8,9 @@ public class DrunkenDemocracy {
 	static Controller theController;
 	
 	public static void main(String[] args) {
-		/*
-		ChannelBot bot1 = new ChannelBot();
-		bot1.start();
-		*/
-		theGame = new Game();
 		
 		theController = new Controller();
+		theGame = new Game(theController);
 		theController.init(theGame);
 		theController.start();
 	}
