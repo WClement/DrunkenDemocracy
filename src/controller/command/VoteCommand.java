@@ -1,4 +1,4 @@
-package controller;
+package controller.command;
 
 public class VoteCommand extends ChatCommand {
 

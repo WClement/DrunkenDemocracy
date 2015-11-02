@@ -6,7 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import model.KreygasmReceiver;
+import model.receiver.KreygasmReceiver;
 
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -26,19 +26,14 @@ public class ChatListenerAdapter extends ListenerAdapter{
 		// check for commands
 		cmdParser.parseForCommand(event.getMessage());
 		
+		//TODO: Move this into its own
 		// log information
 		Date messagetime = new Date();
 		String curr = timeFormat.format(messagetime) + " " + 
 		event.getUser().getNick() + 
 		": " + event.getMessage();
-		
-		
-		writer.println(curr);
-		if (curr.contains("Kreygasm")) {
-//			kreyReceiver.addCommand(new KreygasmCommand(kreyReceiver));
-			kreyReceiver.executeNextCommand();
-		}
-		
+//		writer.println(curr);
+
 		System.out.println(curr);
 	}
 	
@@ -74,9 +69,5 @@ public class ChatListenerAdapter extends ListenerAdapter{
 		writer = new PrintWriter(f, true);		
 	}
 	
-	/*
-	public ChatListenerAdapter(PircBotX myBot, CommandListener com) {
-	}
-	*/
 	
 }

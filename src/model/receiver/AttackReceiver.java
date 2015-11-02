@@ -1,6 +1,7 @@
-package model;
+package model.receiver;
 
-import controller.ChatCommand;
+import model.Game;
+import controller.command.ChatCommand;
 
 public class AttackReceiver extends CommandReceiver {
 
@@ -12,7 +13,7 @@ public class AttackReceiver extends CommandReceiver {
 	@Override
 	public void gameAction(ChatCommand cmd) {
 		// TODO Auto-generated method stub
-		
+		super.getGame().attackAction(cmd);
 	}
 
 }

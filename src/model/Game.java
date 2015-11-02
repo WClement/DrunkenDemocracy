@@ -1,7 +1,12 @@
 package model;
 
-import controller.ChatCommand;
+import model.receiver.AttackReceiver;
+import model.receiver.BuildReceiver;
+import model.receiver.KappaReceiver;
+import model.receiver.KreygasmReceiver;
+import model.receiver.VoteReceiver;
 import controller.Controller;
+import controller.command.ChatCommand;
 
 public class Game {
 
@@ -10,15 +15,31 @@ public class Game {
 	// these are defined by hand for now,
 	// but at some point we should have a 
 	// list of receivers to deal with commands
+	KappaReceiver kappaReceiver;
+	AttackReceiver attackReceiver;
 	BuildReceiver buildReceiver;
 	KreygasmReceiver kreyReceiver;
-	AttackReceiver attackReceiver;
-	KappaReceiver kappaReceiver;
+	VoteReceiver voteReceiver;
+	
+	BuildManager buildManager;
+	
+	TimedExecutor time;
 	
 	public Game(Controller myController) {
 		this.myController = myController;
-		buildReceiver = new BuildReceiver(this);
 		kappaReceiver = new KappaReceiver(this);
+		attackReceiver = new AttackReceiver(this);
+		buildReceiver = new BuildReceiver(this);
+		kreyReceiver = new KreygasmReceiver(this);
+		voteReceiver = new VoteReceiver(this);
+		
+		buildManager = new BuildManager();
+		
+		time = new TimedExecutor(this);
+	}
+	
+	public void start() {
+		time.gameLoop();
 	}
 	
 	public void receiveCommand(ChatCommand cmd) {
@@ -29,20 +50,19 @@ public class Game {
 			kappaReceiver.executeNextCommand();
 			break;
 		case ATTACK:
-//			attackReceiver.addCommand(cmd);
-			myController.sendChatMessage("Attacking: " + cmd.getSuffix());
+			attackReceiver.addCommand(cmd);
+			attackReceiver.executeNextCommand();
 			break;
 		case BUILD:
-//			cmd.setReceiver(buildReceiver);
 			buildReceiver.addCommand(cmd);
-			buildReceiver.executeNextCommand();
+			//buildReceiver.executeNextCommand();
 			break;
 		case KREYGASM:
-			myController.sendChatMessage("You know I'm all about that Kreygasm");
+			kreyReceiver.addCommand(cmd);
+			kreyReceiver.executeNextCommand();
 			break;
 		case VOTE:
-//			voteReceiver.addCommand(cmd);
-			myController.sendChatMessage("Voted for: " + cmd.getSuffix());
+			voteReceiver.addCommand(cmd);
 			break;
 		default:
 			break;
@@ -52,12 +72,32 @@ public class Game {
 		System.out.println(cmd.getClass().toString());
 	}
 	
+	public void manageManagers() {
+		buildManager.manage();
+	}
+	
+	public boolean executeBuildAction() {
+		return buildReceiver.executeNextCommand();
+	}
 	public void buildAction(ChatCommand cmd) {
 		myController.sendChatMessage("Now building: " + cmd.getSuffix());
+		buildManager.newBuilding(cmd.getSuffix());
 	}
 	
 	public void kappaAction(ChatCommand cmd) {
 		myController.sendChatMessage("Wow Kappa");
+	}
+
+	public void attackAction(ChatCommand cmd) {
+		myController.sendChatMessage("Attacking: " + cmd.getSuffix());
+	}
+
+	public void voteAction(ChatCommand cmd) {
+		myController.sendChatMessage("Voted for: " + cmd.getSuffix());
+	}
+
+	public void kreygasmAction(ChatCommand cmd) {
+		myController.sendChatMessage("You know I'm all about that Kreygasm");
 	}
 	
 }

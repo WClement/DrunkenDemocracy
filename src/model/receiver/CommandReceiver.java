@@ -1,9 +1,10 @@
-package model;
+package model.receiver;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-import controller.ChatCommand;
+import model.Game;
+import controller.command.ChatCommand;
 
 public abstract class CommandReceiver {
 	
@@ -20,8 +21,14 @@ public abstract class CommandReceiver {
 		myQueue.add(cmd);
 	}
 	
-	public void executeNextCommand() {
-		myQueue.remove().execute();
+	public boolean executeNextCommand() {
+		if (myQueue.size() > 0){
+			myQueue.remove().execute();
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public Queue<ChatCommand> getQueue() {

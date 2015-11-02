@@ -1,5 +1,8 @@
 package controller;
 
+import controller.command.CommandEnum;
+import controller.command.CommandFactory;
+
 public class CommandParser {
 
 	CommandFactory cmdFactory;

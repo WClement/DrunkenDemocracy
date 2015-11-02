@@ -1,6 +1,7 @@
-package model;
+package model.receiver;
 
-import controller.ChatCommand;
+import model.Game;
+import controller.command.ChatCommand;
 
 public class KappaReceiver extends CommandReceiver {
 

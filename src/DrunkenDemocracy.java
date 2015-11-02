@@ -13,5 +13,6 @@ public class DrunkenDemocracy {
 		theGame = new Game(theController);
 		theController.init(theGame);
 		theController.start();
+		theGame.start();
 	}
 }

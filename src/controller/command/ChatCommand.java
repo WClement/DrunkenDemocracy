@@ -1,6 +1,6 @@
-package controller;
+package controller.command;
 
-import model.CommandReceiver;
+import model.receiver.CommandReceiver;
 
 public abstract class ChatCommand {
 	
