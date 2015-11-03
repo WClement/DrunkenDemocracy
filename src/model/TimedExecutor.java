@@ -1,13 +1,28 @@
 package model;
 
-public class TimedExecutor {
+public class TimedExecutor implements Runnable {
 	
-	Game myGame;
+	Thread t;
+	String threadName = "TimerThread";
 	
-	public TimedExecutor(Game myGame) {
+	Kingdom myGame;
+	
+	public TimedExecutor(Kingdom myGame) {
 		this.myGame = myGame;
 	}
 
+	public void start() {
+		System.out.println("Starting TimedExecutor");
+		if (t == null) {
+			t = new Thread(this, threadName);
+			t.start();
+		}
+	}
+	
+	public void run() {
+		gameLoop();
+	}
+	
 	public void gameLoop() {
 		long lastLoopTime = System.nanoTime();
 		final int TARGET_FPS = 60;
@@ -24,6 +39,7 @@ public class TimedExecutor {
 			
 			//render();
 			
+			myGame.getView().update();
 			
 			try {
 				long temp = (lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000;
@@ -38,6 +54,7 @@ public class TimedExecutor {
 	}
 	
 	int buildCounter = 600;
+	int kappaCounter = 30;
 	
 	private void doGameUpdates(double delta) {
 //		System.out.println(delta);
@@ -52,5 +69,12 @@ public class TimedExecutor {
 			buildCounter++;
 		}
 		
+		if (kappaCounter >= 60) {
+			myGame.executeKappaAction();
+			kappaCounter = 0;
+		}
+		else {
+			kappaCounter++;
+		}
 	}
 }

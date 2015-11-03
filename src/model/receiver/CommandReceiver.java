@@ -3,15 +3,15 @@ package model.receiver;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import model.Game;
+import model.Kingdom;
 import controller.command.ChatCommand;
 
 public abstract class CommandReceiver {
 	
 	private Queue<ChatCommand> myQueue;
-	private Game myGame;
+	private Kingdom myGame;
 		
-	public CommandReceiver(Game myGame) {
+	public CommandReceiver(Kingdom myGame) {
 		this.myGame = myGame;
 		myQueue = new LinkedList<ChatCommand>();
 	}
@@ -42,11 +42,11 @@ public abstract class CommandReceiver {
 	public abstract void gameAction(ChatCommand cmd);
 	
 
-	public void setGame(Game game) {
+	public void setGame(Kingdom game) {
 		this.myGame = game;
 	}
 	
-	public Game getGame() {
+	public Kingdom getGame() {
 		return myGame;
 	}
 }

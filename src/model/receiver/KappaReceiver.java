@@ -1,11 +1,11 @@
 package model.receiver;
 
-import model.Game;
+import model.Kingdom;
 import controller.command.ChatCommand;
 
 public class KappaReceiver extends CommandReceiver {
 
-	public KappaReceiver(Game myGame) {
+	public KappaReceiver(Kingdom myGame) {
 		super(myGame);
 		// TODO Auto-generated constructor stub
 	}

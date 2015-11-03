@@ -1,45 +1,72 @@
-package model;
+package model.manager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
-public class BuildManager {
+import model.Building;
+import model.Kingdom;
+import model.GenericBuilding;
 
+public class BuildManager implements Manager {
+
+	Kingdom myGame;
+	Pattern p = Pattern.compile("[a-zA-Z0-9]X+ [0-9]X+");
+	
 	List<Building> built;
 	List<Building> inProgress;
 	
-	public BuildManager() {
+	public BuildManager(Kingdom myGame) {
+		this.myGame = myGame;
 		built = new ArrayList<Building>();
 		inProgress = new ArrayList<Building>();
 	}
 	
+	// maintaining resources watched by the manager
 	public void manage() {
 		
 		for (Iterator<Building> iterator = inProgress.iterator(); iterator.hasNext();) {
 			Building curr = iterator.next();
-			if(curr.addProgress()) { // if returns true, its finished
-				System.out.println("Building " + curr.getName() + " has completed.");
-				built.add(curr);
-				iterator.remove();
-//				inProgress.remove(curr);
+			if(!curr.addProgress()) { // if returns true, its finished
+				myGame.sendChatMessage("Building " + curr.getName() + " has completed.");
+				built.add(curr); // add to built buildings
+				iterator.remove(); // remove from inProgress list
 			}
-			else {
-				if (curr.getProgressPercentage() > 0.45 && curr.getProgressPercentage() < 0.55)
-					System.out.printf(curr.getName() + " is at %d", curr.getProgressPercentage());
+			else { // report current progress
+				String currProgress = curr.printProgressPretty();
+				if (!currProgress.equals("")) {
+					myGame.sendChatMessage(currProgress);
+				}
 			}
 		}
 	}
 	
 	public void newBuilding(String cmd) {
-		// assume cmd is of format: "name maxProgress"
+		// assert cmd is of format: "name maxProgress"
+		if (!Pattern.matches("[ ]?[a-zA-Z0-9]+ [0-9]+", cmd)) {
+			System.out.printf("Build suffix %s is in wrong format\n", cmd);
+			return;
+		}
+		// remove one allowed whitespace before args
 		if (cmd.indexOf(' ') == 0) {
 			cmd = cmd.substring(1, cmd.length());
 		}
-		System.out.println("new building cmd is: " + cmd);
+		
+		
 		String name = cmd.substring(0, cmd.indexOf(' '));
 		int maxProgress = Integer.parseInt(cmd.substring(cmd.indexOf(' ')+1, cmd.length()));
 		Building newBuilding = new GenericBuilding(name, maxProgress);
+		myGame.sendChatMessage("Now building: " + name);
 		inProgress.add(newBuilding);
 	}
+	
+	public List<Building> getBuiltList() {
+		return built;
+	}
+	
+	public List<Building> getInProgressList() {
+		return inProgress;
+	}
+	
 }

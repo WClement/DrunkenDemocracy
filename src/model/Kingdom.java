@@ -1,5 +1,11 @@
 package model;
 
+import java.util.List;
+
+import view.View;
+import model.manager.BuildManager;
+import model.manager.Kappa;
+import model.manager.KappaManager;
 import model.receiver.AttackReceiver;
 import model.receiver.BuildReceiver;
 import model.receiver.KappaReceiver;
@@ -8,9 +14,12 @@ import model.receiver.VoteReceiver;
 import controller.Controller;
 import controller.command.ChatCommand;
 
-public class Game {
+public class Kingdom {
 
 	Controller myController; //our controller
+	View myView;
+	
+	boolean viewMutex = true;
 	
 	// these are defined by hand for now,
 	// but at some point we should have a 
@@ -22,10 +31,11 @@ public class Game {
 	VoteReceiver voteReceiver;
 	
 	BuildManager buildManager;
+	KappaManager kappaManager;
 	
 	TimedExecutor time;
 	
-	public Game(Controller myController) {
+	public Kingdom(Controller myController) {
 		this.myController = myController;
 		kappaReceiver = new KappaReceiver(this);
 		attackReceiver = new AttackReceiver(this);
@@ -33,21 +43,43 @@ public class Game {
 		kreyReceiver = new KreygasmReceiver(this);
 		voteReceiver = new VoteReceiver(this);
 		
-		buildManager = new BuildManager();
+		buildManager = new BuildManager(this);
+		kappaManager = new KappaManager(this);
 		
 		time = new TimedExecutor(this);
 	}
 	
+	public void viewMutexSwitch() {
+		if (viewMutex)
+			viewMutex = false;
+		else
+			viewMutex = true;
+	}
+	
+	public void setView(View myView) {
+		this.myView = myView;
+	}
+	
+	public View getView() {
+		return myView;
+	}
+	
 	public void start() {
-		time.gameLoop();
+		time.start();
+	}
+	
+	public void sendChatMessage(String msg) {
+		myController.sendChatMessage(msg);
 	}
 	
 	public void receiveCommand(ChatCommand cmd) {
 		
+		
+		
 		switch (cmd.getMyEnum()) {
 		case KAPPA: 
 			kappaReceiver.addCommand(cmd);
-			kappaReceiver.executeNextCommand();
+//			kappaReceiver.executeNextCommand();
 			break;
 		case ATTACK:
 			attackReceiver.addCommand(cmd);
@@ -55,7 +87,6 @@ public class Game {
 			break;
 		case BUILD:
 			buildReceiver.addCommand(cmd);
-			//buildReceiver.executeNextCommand();
 			break;
 		case KREYGASM:
 			kreyReceiver.addCommand(cmd);
@@ -79,13 +110,19 @@ public class Game {
 	public boolean executeBuildAction() {
 		return buildReceiver.executeNextCommand();
 	}
+	
+	public void executeKappaAction() {
+		kappaReceiver.executeNextCommand();
+	}
 	public void buildAction(ChatCommand cmd) {
-		myController.sendChatMessage("Now building: " + cmd.getSuffix());
+		
+//		myController.sendChatMessage("Now building: " + cmd.getSuffix());
 		buildManager.newBuilding(cmd.getSuffix());
 	}
 	
 	public void kappaAction(ChatCommand cmd) {
 		myController.sendChatMessage("Wow Kappa");
+		kappaManager.createKappa();
 	}
 
 	public void attackAction(ChatCommand cmd) {
@@ -98,6 +135,11 @@ public class Game {
 
 	public void kreygasmAction(ChatCommand cmd) {
 		myController.sendChatMessage("You know I'm all about that Kreygasm");
+	}
+	
+	// TEMPORARY
+	public List<Kappa> getKappas() {
+		return kappaManager.getKappaList();
 	}
 	
 }

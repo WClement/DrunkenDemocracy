@@ -4,6 +4,9 @@ public abstract class Building {
 
 	private int maxProgress;
 	private int currentProgress;
+	private int progressFlag = 3;
+	
+	
 	private String name;
 	
 	public Building(String name, int maxProgress) {
@@ -23,10 +26,10 @@ public abstract class Building {
 	public boolean addProgress() {
 		if (currentProgress < maxProgress) {
 			currentProgress++;
-			return false;
+			return true;
 		}
 		else {
-			return true;
+			return false;
 		}
 		
 	}
@@ -40,7 +43,25 @@ public abstract class Building {
 	}
 	
 	public double getProgressPercentage() {
-		return (double)currentProgress/(double)maxProgress;
+		return Math.round(((double)currentProgress/(double)maxProgress)*100);
+	}
+	
+	public String printProgressPretty() {
+		if (getProgressPercentage() == 25.0 && progressFlag > 2) {
+			progressFlag--;
+			return name + " is at 25%";
+		}
+		if (getProgressPercentage() == 50.0 && progressFlag > 1) {
+			progressFlag--;
+			return name + " is at 50%";
+		}
+		if (getProgressPercentage() == 75.0 && progressFlag > 0) {
+			progressFlag--;
+			return name + " is at 75%";
+		}
+		else {
+			return "";
+		}
 	}
 	
 	
