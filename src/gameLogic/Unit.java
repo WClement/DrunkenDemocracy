@@ -1,3 +1,5 @@
+package gameLogic;
+
 
 public abstract class Unit {
 	private int health, strength, speed;

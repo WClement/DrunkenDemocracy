@@ -1,3 +1,5 @@
+package gameLogic;
+
 
 public class Building {
 	private int health;
