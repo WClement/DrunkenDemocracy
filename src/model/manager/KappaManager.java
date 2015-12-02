@@ -3,14 +3,14 @@ package model.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Kingdom;
+import model.Model;
 
 public class KappaManager implements Manager {
 
-	Kingdom myKingdom;
+	Model myKingdom;
 	List<Kappa> kappaList;
 	
-	public KappaManager(Kingdom kingdom) {
+	public KappaManager(Model kingdom) {
 		this.myKingdom = kingdom;
 		kappaList = new ArrayList<Kappa>();
 		createKappa();

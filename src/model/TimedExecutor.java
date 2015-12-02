@@ -5,9 +5,9 @@ public class TimedExecutor implements Runnable {
 	Thread t;
 	String threadName = "TimerThread";
 	
-	Kingdom myGame;
+	Model myGame;
 	
-	public TimedExecutor(Kingdom myGame) {
+	public TimedExecutor(Model myGame) {
 		this.myGame = myGame;
 	}
 
@@ -38,7 +38,6 @@ public class TimedExecutor implements Runnable {
 			doGameUpdates(delta);
 			
 			//render();
-			
 			myGame.getView().update();
 			
 			try {

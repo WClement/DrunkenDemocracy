@@ -6,18 +6,18 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import model.Building;
-import model.Kingdom;
+import model.Model;
 import model.GenericBuilding;
 
 public class BuildManager implements Manager {
 
-	Kingdom myGame;
+	Model myGame;
 	Pattern p = Pattern.compile("[a-zA-Z0-9]X+ [0-9]X+");
 	
 	List<Building> built;
 	List<Building> inProgress;
 	
-	public BuildManager(Kingdom myGame) {
+	public BuildManager(Model myGame) {
 		this.myGame = myGame;
 		built = new ArrayList<Building>();
 		inProgress = new ArrayList<Building>();

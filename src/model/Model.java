@@ -14,28 +14,26 @@ import model.receiver.VoteReceiver;
 import controller.Controller;
 import controller.command.ChatCommand;
 
-public class Kingdom {
+public class Model {
 
-	Controller myController; //our controller
+	Controller myController; // our controller
 	View myView;
-	
-	boolean viewMutex = true;
-	
-	// these are defined by hand for now,
-	// but at some point we should have a 
-	// list of receivers to deal with commands
+		
+	// command receivers
 	KappaReceiver kappaReceiver;
 	AttackReceiver attackReceiver;
 	BuildReceiver buildReceiver;
 	KreygasmReceiver kreyReceiver;
 	VoteReceiver voteReceiver;
 	
+	// managers for commands
 	BuildManager buildManager;
 	KappaManager kappaManager;
 	
+	// game timer
 	TimedExecutor time;
 	
-	public Kingdom(Controller myController) {
+	public Model(Controller myController) {
 		this.myController = myController;
 		kappaReceiver = new KappaReceiver(this);
 		attackReceiver = new AttackReceiver(this);
@@ -49,12 +47,6 @@ public class Kingdom {
 		time = new TimedExecutor(this);
 	}
 	
-	public void viewMutexSwitch() {
-		if (viewMutex)
-			viewMutex = false;
-		else
-			viewMutex = true;
-	}
 	
 	public void setView(View myView) {
 		this.myView = myView;
@@ -73,8 +65,6 @@ public class Kingdom {
 	}
 	
 	public void receiveCommand(ChatCommand cmd) {
-		
-		
 		
 		switch (cmd.getMyEnum()) {
 		case KAPPA: 

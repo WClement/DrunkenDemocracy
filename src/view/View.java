@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import model.Kingdom;
+import model.Model;
 import model.manager.Kappa;
 
 public class View implements Runnable {
@@ -25,13 +25,13 @@ public class View implements Runnable {
 	Thread t;
 	String threadName = "viewThread";
 
-	Kingdom myGame;
+	Model myGame;
 	JFrame myFrame;
 	JPanel myPanel;
 	
 	List<Kappa> kappaList;
 
-	public View(Kingdom myGame) {
+	public View(Model myGame) {
 		this.myGame = myGame;
 	}
 
@@ -59,9 +59,9 @@ public class View implements Runnable {
 	}
 
 	class MyPanel extends JPanel {
-		Kingdom myKingdom;
+		Model myKingdom;
 
-		public MyPanel(Kingdom myKingdom) {
+		public MyPanel(Model myKingdom) {
 			this.myKingdom = myKingdom;
 			setBackground(Color.GRAY);
 		}

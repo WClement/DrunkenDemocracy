@@ -1,11 +1,11 @@
 package model.receiver;
 
-import model.Kingdom;
+import model.Model;
 import controller.command.ChatCommand;
 
 public class VoteReceiver extends CommandReceiver {
 
-	public VoteReceiver(Kingdom myGame) {
+	public VoteReceiver(Model myGame) {
 		super(myGame);
 		// TODO Auto-generated constructor stub
 	}

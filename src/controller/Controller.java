@@ -1,7 +1,7 @@
 package controller;
 
 import controller.command.ChatCommand;
-import model.Game;
+import model.Model;
 
 public class Controller implements Runnable {
 	private Thread t;
@@ -10,9 +10,9 @@ public class Controller implements Runnable {
 	CommandParser myParser;
 	ChatListenerAdapter chatListener;
 	ChannelBot myBot;
-	Game myGame;
+	Model myGame;
 	
-	public void init(Game myGame) {
+	public void init(Model myGame) {
 		this.myGame = myGame;
 		myParser = new CommandParser(this);
 		chatListener = new ChatListenerAdapter(myParser);
