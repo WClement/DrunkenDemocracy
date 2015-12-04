@@ -7,6 +7,8 @@ public class Controller implements Runnable {
 	private Thread t;
 	private String threadName = "ContThread";
 	
+	private int controllerId = 0;
+	
 	CommandParser myParser;
 	ChatListenerAdapter chatListener;
 	ChannelBot myBot;
@@ -17,6 +19,14 @@ public class Controller implements Runnable {
 		myParser = new CommandParser(this);
 		chatListener = new ChatListenerAdapter(myParser);
 		myBot = new ChannelBot(chatListener);
+	}
+	
+	public void setControllerId(int id) {
+		this.controllerId = id;
+	}
+	
+	public int getControllerId() {
+		return controllerId;
 	}
 	
 	public void start() {

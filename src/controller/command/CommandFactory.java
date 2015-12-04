@@ -4,9 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 
 public class CommandFactory {
 	
-	public ChatCommand createCommand(String suffix, CommandEnum myEnum, Class<?> theClass) {
+	public ChatCommand createCommand(String suffix, CommandEnum myEnum, Class<?> theClass, int controllerId) {
 		try {
-			return (ChatCommand) theClass.getConstructor(String.class, CommandEnum.class).newInstance(suffix, myEnum);
+			return (ChatCommand) theClass.getConstructor(String.class, CommandEnum.class, int.class).newInstance(suffix, myEnum, controllerId);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

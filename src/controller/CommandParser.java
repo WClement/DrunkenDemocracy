@@ -26,7 +26,7 @@ public class CommandParser {
 	public void parseForCommand(String raw) {
 		for (CommandEnum e : CommandEnum.values())
 			if (raw.startsWith(e.getPrefix())) {
-				myController.issueCommand(cmdFactory.createCommand(raw.substring(e.getPrefix().length()), e,  e.getMyClass()));
+				myController.issueCommand(cmdFactory.createCommand(raw.substring(e.getPrefix().length()), e,  e.getMyClass(), myController.getControllerId()));
 			}
 	}
 }

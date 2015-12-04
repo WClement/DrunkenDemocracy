@@ -4,8 +4,8 @@ public class VoteCommand extends ChatCommand {
 
 
 
-	public VoteCommand(String suffix, CommandEnum myEnum) {
-		super(suffix, myEnum);
+	public VoteCommand(String suffix, CommandEnum myEnum, int controllerId) {
+		super(suffix, myEnum, controllerId);
 		// TODO Auto-generated constructor stub
 	}
 

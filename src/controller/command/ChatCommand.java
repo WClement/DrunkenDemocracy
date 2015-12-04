@@ -9,10 +9,16 @@ public abstract class ChatCommand {
 	private CommandReceiver receiver;
 	private String suffix;
 	private CommandEnum myEnum;
+	private int controllerId;
 	
-	public ChatCommand(String suffix, CommandEnum myEnum) {
+	public ChatCommand(String suffix, CommandEnum myEnum, int controllerId) {
 		this.setMyEnum(myEnum);
 		this.suffix = suffix;
+		this.controllerId = controllerId;
+	}
+	
+	public int getControllerId() {
+		return controllerId;
 	}
 	
 	public String getSuffix() {

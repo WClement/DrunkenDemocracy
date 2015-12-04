@@ -1,11 +1,19 @@
-package model;
+package gameObjects;
 
 public abstract class Building {
 
 	private int maxProgress;
 	private int currentProgress;
 	private int progressFlag = 3;
+	private String team;
+	private boolean isDead = false;
 	
+	private int health;
+	private int income;
+	
+	private int location;
+	
+	private LocationNode myLoc;
 	
 	private String name;
 	
@@ -17,6 +25,15 @@ public abstract class Building {
 		else {
 			this.maxProgress = maxProgress;
 		}
+		myLoc = null;
+	}
+	
+	public void setLocation(LocationNode newLoc) {
+		myLoc = newLoc;
+	}
+	
+	public void destroy() {
+		myLoc.removeBuilding(this);
 	}
 	
 	public String getName() {
@@ -31,7 +48,6 @@ public abstract class Building {
 		else {
 			return false;
 		}
-		
 	}
 	
 	public int getProgress() {
@@ -64,5 +80,15 @@ public abstract class Building {
 		}
 	}
 	
+	public boolean repair(){
+		return false;
+	}
 	
+	public boolean takeDamage(int hit){
+		if (hit >= health) {
+			isDead = true;
+			destroy();
+		}
+		return false;
+	}
 }

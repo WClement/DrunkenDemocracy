@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import view.View;
@@ -17,6 +18,9 @@ import controller.command.ChatCommand;
 public class Model {
 
 	Controller myController; // our controller
+	ArrayList<Controller> controllers;
+	private int nextControllerId = 0;
+	
 	View myView;
 		
 	// command receivers
@@ -33,7 +37,33 @@ public class Model {
 	// game timer
 	TimedExecutor time;
 	
+	public Model() {
+		
+		controllers = new ArrayList<Controller>();
+		
+		kappaReceiver = new KappaReceiver(this);
+		attackReceiver = new AttackReceiver(this);
+		buildReceiver = new BuildReceiver(this);
+		kreyReceiver = new KreygasmReceiver(this);
+		voteReceiver = new VoteReceiver(this);
+		
+		buildManager = new BuildManager(this);
+		kappaManager = new KappaManager(this);
+		
+		time = new TimedExecutor(this);
+		
+	}
+	
+	public void addController(Controller toAdd) {
+		controllers.add(toAdd);
+		toAdd.setControllerId(nextControllerId);
+		nextControllerId++;
+	}
+	
+	
+	
 	public Model(Controller myController) {
+		/*
 		this.myController = myController;
 		kappaReceiver = new KappaReceiver(this);
 		attackReceiver = new AttackReceiver(this);
@@ -45,6 +75,7 @@ public class Model {
 		kappaManager = new KappaManager(this);
 		
 		time = new TimedExecutor(this);
+		*/
 	}
 	
 	
@@ -67,7 +98,7 @@ public class Model {
 	public void receiveCommand(ChatCommand cmd) {
 		
 		switch (cmd.getMyEnum()) {
-		case KAPPA: 
+		case KAPPA:
 			kappaReceiver.addCommand(cmd);
 //			kappaReceiver.executeNextCommand();
 			break;
@@ -111,20 +142,22 @@ public class Model {
 	}
 	
 	public void kappaAction(ChatCommand cmd) {
-		myController.sendChatMessage("Wow Kappa");
+		controllers.get(cmd.getControllerId()).sendChatMessage("Wow Kappa");
+//		myController.sendChatMessage("Wow Kappa");
 		kappaManager.createKappa();
 	}
 
 	public void attackAction(ChatCommand cmd) {
-		myController.sendChatMessage("Attacking: " + cmd.getSuffix());
+		
+		controllers.get(cmd.getControllerId()).sendChatMessage("Attacking: " + cmd.getSuffix());
 	}
 
 	public void voteAction(ChatCommand cmd) {
-		myController.sendChatMessage("Voted for: " + cmd.getSuffix());
+		controllers.get(cmd.getControllerId()).sendChatMessage("Voted for: " + cmd.getSuffix());
 	}
 
 	public void kreygasmAction(ChatCommand cmd) {
-		myController.sendChatMessage("You know I'm all about that Kreygasm");
+		controllers.get(cmd.getControllerId()).sendChatMessage("You know I'm all about that Kreygasm");
 	}
 	
 	// TEMPORARY

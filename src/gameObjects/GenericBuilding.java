@@ -1,4 +1,5 @@
-package model;
+package gameObjects;
+
 
 public class GenericBuilding extends Building {
 

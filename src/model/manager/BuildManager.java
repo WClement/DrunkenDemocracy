@@ -1,13 +1,14 @@
 package model.manager;
 
+import gameObjects.Building;
+import gameObjects.GenericBuilding;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import model.Building;
 import model.Model;
-import model.GenericBuilding;
 
 public class BuildManager implements Manager {
 
@@ -25,7 +26,6 @@ public class BuildManager implements Manager {
 	
 	// maintaining resources watched by the manager
 	public void manage() {
-		
 		for (Iterator<Building> iterator = inProgress.iterator(); iterator.hasNext();) {
 			Building curr = iterator.next();
 			if(!curr.addProgress()) { // if returns true, its finished

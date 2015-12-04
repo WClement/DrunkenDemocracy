@@ -12,7 +12,8 @@ public class DrunkenDemocracy {
 	public static void main(String[] args) {
 		
 		theController = new Controller();
-		theGame = new Model(theController);
+		theGame = new Model();
+		theGame.addController(theController);
 		theView = new View(theGame);
 		theGame.setView(theView);
 		theController.init(theGame);
@@ -20,5 +21,10 @@ public class DrunkenDemocracy {
 		theController.start();
 		theView.start();
 		theGame.start();
+		
+		
+		
 	}
+	
+	
 }

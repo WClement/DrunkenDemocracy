@@ -4,8 +4,8 @@ public class KreygasmCommand extends ChatCommand {
 
 
 
-	public KreygasmCommand(String suffix, CommandEnum myEnum) {
-		super(suffix, myEnum);
+	public KreygasmCommand(String suffix, CommandEnum myEnum, int controllerId) {
+		super(suffix, myEnum, controllerId);
 		// TODO Auto-generated constructor stub
 	}
 
