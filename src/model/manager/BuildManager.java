@@ -51,9 +51,12 @@ public class BuildManager extends Manager {
 			if (!curr.addProgress()) { // if returns true, its finished
 				getMyModel().sendChatMessage("Building " + curr.getName()
 						+ " has completed.");
+				System.out.println("Building " + curr.getName()
+						+ " has completed.");
 				built.add(curr); // add to built buildings
 				iterator.remove(); // remove from inProgress list
 			} else { // report current progress
+				System.out.println("Added progress to " + curr.getName() + ".");
 				String currProgress = curr.printProgressPretty();
 				if (!currProgress.equals("")) {
 					getMyModel().sendChatMessage(currProgress);
@@ -63,16 +66,17 @@ public class BuildManager extends Manager {
 	}
 
 	
-	public void newBuilding(String toBuild) {
+	public void newBuilding(String toBuild, int kingdomIndex) {
 
 		for (BuildingProperties b : BuildingProperties.values()) {
 			if (toBuild.toLowerCase().equals(b.name)) {
 				Building newBuilding = BuildingFactory.createBuilding(b);
 				// newBuilding.setLocation(theLocation);
 				// theMap.place(newBuilding);
+				System.out.println("Now building: " + newBuilding.getName());
 				getMyModel().sendChatMessage("Now building: " + newBuilding.getName());
 				inProgress.add(newBuilding);
-				newBuilding.setLocation(new LocationNode());
+				newBuilding.setLocation(getMyModel().mapManager.getKingdomLocation(kingdomIndex));
 				newBuilding.construct();
 			}
 		}
@@ -95,6 +99,11 @@ public class BuildManager extends Manager {
 		if (check.matches(".*\\d.*")) { //is one number
 			// idk something with one number
 		}
+		else if (check.equals("info")) {
+			for (Building b : built) {
+				System.out.println(b.getName() + " is at index " + b.getLocationIndex() + " at location node " + b.getLocation().getId());
+			}
+		}
 		else if (check.equals("y")) {
 			// yes vote for building
 		}
@@ -105,16 +114,16 @@ public class BuildManager extends Manager {
 			// any number of spaces, building name, frames to build
 			// B: Tower 500
 			// B:    Tower 20
-			newBuilding(cmd.getSuffix());
+			newBuilding(cmd.getSuffix(), cmd.getControllerId());
 
 		}
 		else if (check.matches("[ ]?[a-zA-Z0-9]")) {
 			// any number of spaces, name of building
-			newBuilding(cmd.getSuffix());
+			newBuilding(cmd.getSuffix(), cmd.getControllerId());
 
 		}
 			
-		newBuilding(check.toUpperCase());
+		newBuilding(check.toUpperCase(), cmd.getControllerId());
 	}
 
 	public List<Building> getBuiltList() {

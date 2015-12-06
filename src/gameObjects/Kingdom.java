@@ -13,6 +13,16 @@ public class Kingdom {
 	
 	
 	private ArrayList<Building> buildings;
+
+
+	public LocationNode getMyLocation() {
+		return myLocation;
+	}
+
+
+	public void setMyLocation(LocationNode myLocation) {
+		this.myLocation = myLocation;
+	}
 	
 	
 	

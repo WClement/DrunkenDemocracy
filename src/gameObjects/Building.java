@@ -24,16 +24,11 @@ public abstract class Building {
 	private boolean isBuilding = false; // is currently adding to building progress
 	private int location; // location in location node for ordering
 	private LocationNode myLoc; // my location node
+	private int locationIndex;
 	
 	
 	public Building(String name, int maxProgress) {
 		this.name = name;
-		if (maxProgress > 3600) {
-			this.maxBuildingProgress = 3600;
-		}
-		else {
-			this.maxBuildingProgress = maxProgress;
-		}
 		myLoc = null;
 	}
 	
@@ -55,6 +50,14 @@ public abstract class Building {
 	
 	public LocationNode getLocation() {
 		return myLoc;
+	}
+	
+	public void setLocationIndex(int index) {
+		this.locationIndex = index;
+	}
+	
+	public int getLocationIndex() {
+		return locationIndex;
 	}
 	
 	public void destroy() {

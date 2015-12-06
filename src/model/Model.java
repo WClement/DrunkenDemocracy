@@ -10,6 +10,7 @@ import model.manager.BuildManager;
 import model.manager.Kappa;
 import model.manager.KappaManager;
 import model.manager.KreygasmManager;
+import model.manager.MapManager;
 import model.manager.VoteManager;
 import model.receiver.AttackReceiver;
 import model.receiver.BuildReceiver;
@@ -36,11 +37,12 @@ public class Model {
 	VoteReceiver voteReceiver;
 	
 	// managers for commands
-	BuildManager buildManager;
-	KappaManager kappaManager;
-	KreygasmManager kreyManager;
-	VoteManager voteManager;
-	AttackManager attackManager;
+	public BuildManager buildManager;
+	public KappaManager kappaManager;
+	public KreygasmManager kreyManager;
+	public VoteManager voteManager;
+	public AttackManager attackManager;
+	public MapManager mapManager;
 	
 	// game timer
 	TimedExecutor time;
@@ -54,12 +56,15 @@ public class Model {
 		kreyManager = new KreygasmManager(this);
 		voteManager = new VoteManager(this);
 		attackManager = new AttackManager(this);
+		mapManager = new MapManager(this);
+		mapManager.createMap1();
 		
 		kappaReceiver = new KappaReceiver(kappaManager);
 		attackReceiver = new AttackReceiver(attackManager);
 		buildReceiver = new BuildReceiver(buildManager); // also sets manager's receiver
 		kreyReceiver = new KreygasmReceiver(kreyManager);
 		voteReceiver = new VoteReceiver(voteManager);
+		
 		
 		time = new TimedExecutor(this);
 		
@@ -115,7 +120,7 @@ public class Model {
 			break;
 		}
 		// Prints the class of the command
-		System.out.println(cmd.getClass().toString());
+		//System.out.println(cmd.getClass().toString());
 	}
 	
 	public void manageManagers() {
