@@ -38,7 +38,7 @@ public class TimedExecutor implements Runnable {
 			doGameUpdates(delta);
 			
 			//render();
-			myGame.getView().update();
+//			myGame.getView().update();
 			
 			try {
 				long temp = (lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000;
