@@ -30,7 +30,11 @@
 	<classpathentry kind="lib" path="lib/lwjgl/jorbis-0.0.15.jar"/>
 	<classpathentry kind="lib" path="lib/lwjgl/lwjgl_util_applet.jar"/>
 	<classpathentry kind="lib" path="lib/lwjgl/lwjgl_util.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="RealTwitchBot/lib/lwjgl/native"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/lwjgl/natives-linux.jar"/>
 	<classpathentry kind="lib" path="lib/lwjgl/natives-mac.jar"/>
 	<classpathentry kind="lib" path="lib/lwjgl/natives-windows.jar"/>
