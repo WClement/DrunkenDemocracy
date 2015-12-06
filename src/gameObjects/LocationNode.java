@@ -9,6 +9,13 @@ public class LocationNode {
 	private int buildingCount = 0;
 	ArrayList<Building> buildings;
 	
+	//
+	// TEMPORARY FOR DRAWING
+	public int x = 200;
+	public int y = 200;
+	// END TEMPORARY
+	//
+	
 	public boolean addBuilding(Building toAdd) {
 		if (buildingCount < buildingSlots) {
 			buildings.add(toAdd);

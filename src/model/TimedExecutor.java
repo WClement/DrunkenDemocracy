@@ -52,7 +52,7 @@ public class TimedExecutor implements Runnable {
 		}
 	}
 	
-	int buildCounter = 600;
+//	int buildCounter = 600;
 	int kappaCounter = 30;
 	
 	private void doGameUpdates(double delta) {
@@ -60,20 +60,20 @@ public class TimedExecutor implements Runnable {
 		
 		myGame.manageManagers();
 		
-		if (buildCounter >= 600) {
-			if (myGame.executeBuildAction())
-				buildCounter = 0;
-		}
-		else {
-			buildCounter++;
-		}
+//		if (buildCounter >= 600) {
+//			if (myGame.executeBuildAction())
+//				buildCounter = 0;
+//		}
+//		else {
+//			buildCounter++;
+//		}
 		
-		if (kappaCounter >= 60) {
-			myGame.executeKappaAction();
-			kappaCounter = 0;
-		}
-		else {
-			kappaCounter++;
-		}
+//		if (kappaCounter >= 60) {
+//			myGame.executeKappaAction();
+//			kappaCounter = 0;
+//		}
+//		else {
+//			kappaCounter++;
+//		}
 	}
 }

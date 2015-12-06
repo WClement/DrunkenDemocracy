@@ -35,7 +35,7 @@ public abstract class ChatCommand {
 	
 	
 	public void execute() {
-		this.getReceiver().gameAction(this);
+		this.getReceiver().notifyManager(this);
 	}
 
 	public CommandEnum getMyEnum() {

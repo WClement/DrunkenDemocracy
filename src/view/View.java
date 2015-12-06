@@ -1,5 +1,7 @@
 package view;
 
+import gameObjects.Building;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -25,21 +27,23 @@ public class View implements Runnable {
 	Thread t;
 	String threadName = "viewThread";
 
-	Model myGame;
+	Model myModel;
 	JFrame myFrame;
 	JPanel myPanel;
 	
 	List<Kappa> kappaList;
+	List<Building> buildingList;
 
 	public View(Model myGame) {
-		this.myGame = myGame;
+		this.myModel = myGame;
 	}
 
 	public void init() {
 		kappaList = new ArrayList<Kappa>();
+		buildingList = new ArrayList<Building>();
 		myFrame = new JFrame();
 		myFrame.setSize(600, 600);
-		myPanel = new MyPanel(myGame);
+		myPanel = new MyPanel(myModel);
 		myFrame.add(myPanel);
 	}
 
@@ -52,41 +56,32 @@ public class View implements Runnable {
 	}
 
 	public void update() {
-		if (!kappaList.equals(myGame.getKappas())) {
-			kappaList = myGame.getKappas();
+		if (!kappaList.equals(myModel.getKappas())) {
+			kappaList = myModel.getKappas();
 		}
+		if (!buildingList.equals(myModel.getBuildingsForDrawing())) {
+			buildingList = myModel.getBuildingsForDrawing();
+		}
+		
 		myPanel.repaint();
 	}
 
 	class MyPanel extends JPanel {
 		Model myKingdom;
 
-		public MyPanel(Model myKingdom) {
-			this.myKingdom = myKingdom;
+		public MyPanel(Model myModel) {
+			this.myKingdom = myModel;
 			setBackground(Color.GRAY);
 		}
 
 		File kappaFile = new File("Images/Kappa.png");
+		File buildingFile = new File("Images/ShibeZ.png");
 
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			if (kappaList != null) {
 				
-				/*
-				try {
-					for (Kappa k : kappaList) {
-						try {
-							g.drawImage(ImageIO.read(kappaFile), k.getX(),
-									k.getY(), 50, 50, null);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				} catch (ConcurrentModificationException c) {
 
-				}
-				*/
 				for (int i = 0; i < kappaList.size(); i++) {
 					try {
 						g.drawImage(ImageIO.read(kappaFile), kappaList.get(i).getX(),
@@ -99,6 +94,18 @@ public class View implements Runnable {
 				}
 				
 
+			}
+			if (buildingList != null && buildingList.size() > 0) {
+				for (int i = 0; i < buildingList.size(); i++) {
+					try {
+						g.drawImage(ImageIO.read(buildingFile), buildingList.get(i).getLocation().x,
+								buildingList.get(i).getLocation().y, 50, 50, null);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+				}
 			}
 
 		}

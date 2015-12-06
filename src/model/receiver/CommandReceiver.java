@@ -4,15 +4,18 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import model.Model;
+import model.manager.Manager;
 import controller.command.ChatCommand;
 
 public abstract class CommandReceiver {
 	
 	private Queue<ChatCommand> myQueue;
 	private Model myGame;
-		
-	public CommandReceiver(Model myGame) {
-		this.myGame = myGame;
+	private Manager myManager;
+	
+	public CommandReceiver(Manager myManager) {
+		this.setMyManager(myManager);
+		myManager.setReceiver(this);
 		myQueue = new LinkedList<ChatCommand>();
 	}
 	
@@ -31,6 +34,10 @@ public abstract class CommandReceiver {
 		}
 	}
 	
+	public void notifyManager(ChatCommand cmd) {
+		getMyManager().executeCommand(cmd);
+	}
+	
 	public Queue<ChatCommand> getQueue() {
 		return myQueue;
 	}
@@ -39,7 +46,7 @@ public abstract class CommandReceiver {
 		this.myQueue = myQueue;
 	}
 	
-	public abstract void gameAction(ChatCommand cmd);
+
 	
 
 	public void setGame(Model game) {
@@ -48,5 +55,13 @@ public abstract class CommandReceiver {
 	
 	public Model getGame() {
 		return myGame;
+	}
+
+	public Manager getMyManager() {
+		return myManager;
+	}
+
+	public void setMyManager(Manager myManager) {
+		this.myManager = myManager;
 	}
 }

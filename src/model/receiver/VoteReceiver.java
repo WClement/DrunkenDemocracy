@@ -1,18 +1,14 @@
 package model.receiver;
 
 import model.Model;
+import model.manager.Manager;
 import controller.command.ChatCommand;
 
 public class VoteReceiver extends CommandReceiver {
 
-	public VoteReceiver(Model myGame) {
-		super(myGame);
+	public VoteReceiver(Manager myManager) {
+		super(myManager);
 		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public void gameAction(ChatCommand cmd) {
-		super.getGame().voteAction(cmd);
 	}
 
 }

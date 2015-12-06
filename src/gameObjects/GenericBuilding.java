@@ -7,5 +7,9 @@ public class GenericBuilding extends Building {
 		super(name, maxProgress);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public GenericBuilding(BuildingProperties b) {
+		super(b);
+	}
 
 }

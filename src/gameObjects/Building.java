@@ -2,37 +2,63 @@ package gameObjects;
 
 public abstract class Building {
 
-	private int maxProgress;
-	private int currentProgress;
-	private int progressFlag = 3;
-	private String team;
-	private boolean isDead = false;
+	// public accessible properties
+	public String name; // enum name of building
+	public String type; // defensive, offensive
+	public int maxHealth; // initial max health
+	public int maxBuildingProgress; // max building progress
+	public int goldCost; // initial cost in gold
+	public String team; // team (for colors and damage)
+	public int baseIncome; // base income!
+	public int baseDamage; // base damage 
 	
-	private int health;
-	private int income;
+	// private vars for changing values
+	private int currentHealth; // current health
+	private int currentBuildingProgress; // current building progress
+	private int currentIncome;
+
 	
-	private int location;
+	private int progressFlag = 3; // used for pretty print
+	private boolean isDead = false; // set if currentHealth <= 0
+	private boolean finishedBuilding = false; // has finished building
+	private boolean isBuilding = false; // is currently adding to building progress
+	private int location; // location in location node for ordering
+	private LocationNode myLoc; // my location node
 	
-	private LocationNode myLoc;
-	
-	private String name;
 	
 	public Building(String name, int maxProgress) {
 		this.name = name;
 		if (maxProgress > 3600) {
-			this.maxProgress = 3600;
+			this.maxBuildingProgress = 3600;
 		}
 		else {
-			this.maxProgress = maxProgress;
+			this.maxBuildingProgress = maxProgress;
 		}
 		myLoc = null;
+	}
+	
+	public Building(BuildingProperties b) {
+		this.name = b.name;
+		this.type = b.type;
+		this.maxHealth = b.maxHealth;
+		this.maxBuildingProgress = b.maxBuildingProgress;
+		this.goldCost = b.goldCost;
+		this.baseIncome = b.baseIncome;
+		this.baseDamage = b.baseDamage;
+		
+		currentBuildingProgress = 0;
 	}
 	
 	public void setLocation(LocationNode newLoc) {
 		myLoc = newLoc;
 	}
 	
+	public LocationNode getLocation() {
+		return myLoc;
+	}
+	
 	public void destroy() {
+		isDead = true;
 		myLoc.removeBuilding(this);
 	}
 	
@@ -41,25 +67,32 @@ public abstract class Building {
 	}
 	
 	public boolean addProgress() {
-		if (currentProgress < maxProgress) {
-			currentProgress++;
+		
+		if (!isBuilding) { // building is paused
 			return true;
 		}
-		else {
+		
+		if (currentBuildingProgress < maxBuildingProgress) { // currently building
+			currentBuildingProgress++;
+			return true;
+		}
+		else {		// finished building
+			isBuilding = false;
+			finishedBuilding = true;
 			return false;
 		}
 	}
 	
 	public int getProgress() {
-		return currentProgress;
+		return currentBuildingProgress;
 	}
 	
 	public int getMaxProgress() {
-		return maxProgress;
+		return maxBuildingProgress;
 	}
 	
 	public double getProgressPercentage() {
-		return Math.round(((double)currentProgress/(double)maxProgress)*100);
+		return Math.round(((double)currentBuildingProgress/(double)maxBuildingProgress)*100);
 	}
 	
 	public String printProgressPretty() {
@@ -84,8 +117,33 @@ public abstract class Building {
 		return false;
 	}
 	
+	public boolean construct() { // resume construction
+		if (isBuilding) {
+			return false;
+		}
+		isBuilding = true;
+		return true;
+	}
+	
+	public boolean stopConstructing() { // halt construction
+		if (!isBuilding) {
+			return false;
+		}
+		isBuilding = false;
+		return true;
+	}
+	
 	public boolean takeDamage(int hit){
-		if (hit >= health) {
+		
+		if (!finishedBuilding) {
+			currentBuildingProgress -= hit;
+			if (currentBuildingProgress < 0) {
+				destroy();
+			}
+		}
+		
+		
+		if (hit >= currentHealth) {
 			isDead = true;
 			destroy();
 		}

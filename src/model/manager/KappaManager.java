@@ -3,15 +3,19 @@ package model.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.command.ChatCommand;
 import model.Model;
+import model.receiver.KappaReceiver;
 
-public class KappaManager implements Manager {
+public class KappaManager extends Manager {
 
-	Model myKingdom;
 	List<Kappa> kappaList;
 	
-	public KappaManager(Model kingdom) {
-		this.myKingdom = kingdom;
+	int kappaCounter = 1;
+
+	
+	public KappaManager(Model myModel) {
+		super(myModel);
 		kappaList = new ArrayList<Kappa>();
 		createKappa();
 	}
@@ -33,7 +37,20 @@ public class KappaManager implements Manager {
 	@Override
 	public void manage() {
 		// TODO Auto-generated method stub
+		if (kappaCounter >= 1) {
+			getMyReceiver().executeNextCommand();
+			kappaCounter = 0;
+		}
+		else {
+			kappaCounter++;
+		}
 		
+	}
+
+	@Override
+	public void executeCommand(ChatCommand cmd) {
+		getMyModel().sendChatMessage("Wow Kappa", cmd.getControllerId());
+		createKappa();
 	}
 	
 	

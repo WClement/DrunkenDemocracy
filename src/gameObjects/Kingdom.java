@@ -13,4 +13,9 @@ public class Kingdom {
 	
 	
 	private ArrayList<Building> buildings;
+	
+	
+	
+	
+	
 }

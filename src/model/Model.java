@@ -1,17 +1,22 @@
 package model;
 
+import gameObjects.Building;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import view.View;
+import model.manager.AttackManager;
 import model.manager.BuildManager;
 import model.manager.Kappa;
 import model.manager.KappaManager;
+import model.manager.KreygasmManager;
+import model.manager.VoteManager;
 import model.receiver.AttackReceiver;
 import model.receiver.BuildReceiver;
 import model.receiver.KappaReceiver;
 import model.receiver.KreygasmReceiver;
 import model.receiver.VoteReceiver;
+import view.View;
 import controller.Controller;
 import controller.command.ChatCommand;
 
@@ -33,6 +38,9 @@ public class Model {
 	// managers for commands
 	BuildManager buildManager;
 	KappaManager kappaManager;
+	KreygasmManager kreyManager;
+	VoteManager voteManager;
+	AttackManager attackManager;
 	
 	// game timer
 	TimedExecutor time;
@@ -41,14 +49,17 @@ public class Model {
 		
 		controllers = new ArrayList<Controller>();
 		
-		kappaReceiver = new KappaReceiver(this);
-		attackReceiver = new AttackReceiver(this);
-		buildReceiver = new BuildReceiver(this);
-		kreyReceiver = new KreygasmReceiver(this);
-		voteReceiver = new VoteReceiver(this);
-		
 		buildManager = new BuildManager(this);
 		kappaManager = new KappaManager(this);
+		kreyManager = new KreygasmManager(this);
+		voteManager = new VoteManager(this);
+		attackManager = new AttackManager(this);
+		
+		kappaReceiver = new KappaReceiver(kappaManager);
+		attackReceiver = new AttackReceiver(attackManager);
+		buildReceiver = new BuildReceiver(buildManager); // also sets manager's receiver
+		kreyReceiver = new KreygasmReceiver(kreyManager);
+		voteReceiver = new VoteReceiver(voteManager);
 		
 		time = new TimedExecutor(this);
 		
@@ -59,25 +70,6 @@ public class Model {
 		toAdd.setControllerId(nextControllerId);
 		nextControllerId++;
 	}
-	
-	
-	
-	public Model(Controller myController) {
-		/*
-		this.myController = myController;
-		kappaReceiver = new KappaReceiver(this);
-		attackReceiver = new AttackReceiver(this);
-		buildReceiver = new BuildReceiver(this);
-		kreyReceiver = new KreygasmReceiver(this);
-		voteReceiver = new VoteReceiver(this);
-		
-		buildManager = new BuildManager(this);
-		kappaManager = new KappaManager(this);
-		
-		time = new TimedExecutor(this);
-		*/
-	}
-	
 	
 	public void setView(View myView) {
 		this.myView = myView;
@@ -91,8 +83,12 @@ public class Model {
 		time.start();
 	}
 	
+	public void sendChatMessage(String msg, int controllerId) {
+		controllers.get(controllerId).sendChatMessage(msg);
+	}
+	
 	public void sendChatMessage(String msg) {
-		myController.sendChatMessage(msg);
+		controllers.get(0).sendChatMessage(msg);
 	}
 	
 	public void receiveCommand(ChatCommand cmd) {
@@ -100,18 +96,17 @@ public class Model {
 		switch (cmd.getMyEnum()) {
 		case KAPPA:
 			kappaReceiver.addCommand(cmd);
-//			kappaReceiver.executeNextCommand();
 			break;
 		case ATTACK:
 			attackReceiver.addCommand(cmd);
-			attackReceiver.executeNextCommand();
+//			attackReceiver.executeNextCommand();
 			break;
 		case BUILD:
 			buildReceiver.addCommand(cmd);
 			break;
 		case KREYGASM:
 			kreyReceiver.addCommand(cmd);
-			kreyReceiver.executeNextCommand();
+//			kreyReceiver.executeNextCommand();
 			break;
 		case VOTE:
 			voteReceiver.addCommand(cmd);
@@ -119,45 +114,19 @@ public class Model {
 		default:
 			break;
 		}
-		
 		// Prints the class of the command
 		System.out.println(cmd.getClass().toString());
 	}
 	
 	public void manageManagers() {
 		buildManager.manage();
+		kappaManager.manage();
 	}
 	
-	public boolean executeBuildAction() {
-		return buildReceiver.executeNextCommand();
-	}
-	
-	public void executeKappaAction() {
-		kappaReceiver.executeNextCommand();
-	}
-	public void buildAction(ChatCommand cmd) {
-		
-//		myController.sendChatMessage("Now building: " + cmd.getSuffix());
-		buildManager.newBuilding(cmd.getSuffix());
-	}
-	
-	public void kappaAction(ChatCommand cmd) {
-		controllers.get(cmd.getControllerId()).sendChatMessage("Wow Kappa");
-//		myController.sendChatMessage("Wow Kappa");
-		kappaManager.createKappa();
-	}
 
-	public void attackAction(ChatCommand cmd) {
-		
-		controllers.get(cmd.getControllerId()).sendChatMessage("Attacking: " + cmd.getSuffix());
-	}
-
-	public void voteAction(ChatCommand cmd) {
-		controllers.get(cmd.getControllerId()).sendChatMessage("Voted for: " + cmd.getSuffix());
-	}
-
-	public void kreygasmAction(ChatCommand cmd) {
-		controllers.get(cmd.getControllerId()).sendChatMessage("You know I'm all about that Kreygasm");
+	// TEMPORARY
+	public List<Building> getBuildingsForDrawing() {
+		return buildManager.getBuiltList();
 	}
 	
 	// TEMPORARY
