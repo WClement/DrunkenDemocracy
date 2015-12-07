@@ -35,7 +35,7 @@ public class ViewSlot implements Drawable{
 		slotImage.draw(x, y);
 		// TODO: draw building in this slot if it isn't null
 		if (this.building != null){
-			
+			this.building.draw();
 		}
 	 }
 }

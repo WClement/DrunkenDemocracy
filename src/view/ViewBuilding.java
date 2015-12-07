@@ -2,7 +2,7 @@ package view;
 
 import org.newdawn.slick.Image;
 
-public class ViewBuilding {
+public class ViewBuilding implements Drawable {
 	Image sprite;
 	int x, y;
 	
@@ -14,5 +14,11 @@ public class ViewBuilding {
 	
 	public Image getSprite(){
 		return this.sprite;
+	}
+
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		this.sprite.draw(x, y);
 	}
 }

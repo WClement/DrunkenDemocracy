@@ -73,14 +73,22 @@ public class BuildManager extends Manager {
 				Building newBuilding = BuildingFactory.createBuilding(b);
 				// newBuilding.setLocation(theLocation);
 				// theMap.place(newBuilding);
-				System.out.println("Now building: " + newBuilding.getName());
-				getMyModel().sendChatMessage("Now building: " + newBuilding.getName());
-				inProgress.add(newBuilding);
+				
+				
 				LocationNode loc = getMyModel().mapManager.getKingdomLocation(kingdomIndex);
 				
 				newBuilding.setLocation(loc);
-				loc.addBuilding(newBuilding);
-				newBuilding.construct();
+				boolean hasSpace = loc.addBuilding(newBuilding);
+				if (hasSpace){
+					newBuilding.construct();
+					System.out.println("Now building: " + newBuilding.getName());
+					getMyModel().sendChatMessage("Now building: " + newBuilding.getName());
+					inProgress.add(newBuilding);
+				}
+				else{
+					System.out.println("Not enough space for " + newBuilding.getName());
+					getMyModel().sendChatMessage("Not enough space for " + newBuilding.getName());
+				}
 			}
 		}
 		

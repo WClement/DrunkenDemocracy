@@ -168,8 +168,7 @@ public class View extends BasicGame {
 		
 		LocationNode loc = myModel.getLocation();
 		
-		team1 = new ViewLocation(100, 100, KINGDOM_WIDTH, KINGDOM_HEIGHT, walls, loc.getBuildingSlots(),
-								buildings.get(0), loc);
+		team1 = new ViewLocation(100, 100, walls, loc.getBuildingSlots(), buildings.get(0), loc);
 
 		redTank = new Image("graphics/redTank.png");
 		greenTank = new Image("graphics/greenTank.png");

@@ -29,11 +29,11 @@ public class ViewLocation implements Drawable{
 	
 	ArrayList<ViewSlot> slots;
 
-	public ViewLocation(int startX, int startY, int width, int height, Image[] walls, int slots, Image slotImg,
+	public ViewLocation(int startX, int startY, Image[] walls, int slots, Image slotImg,
 			LocationNode loc) {
 		this.startX = startX;
 		this.startY = startY;
-		this.width = startX + (4 * (slotImg.getWidth() + 10) + 20);
+		this.width = startX + (4 * (slotImg.getWidth() + 10) + 11); // locations are all 4 slots wide for now
 		this.height = (int) (startY + (Math.ceil((slots / 4.0)) * (slotImg.getHeight() + 10) + 10));
 		wallLeftRight = walls[0];
 		wallUpDown = walls[1];
@@ -78,9 +78,6 @@ public class ViewLocation implements Drawable{
 		// TODO Auto-generated method stub
 		for(ViewSlot slot : slots){
 			slot.draw();
-			if (slot.building != null){
-				slot.building.getSprite().draw(slot.building.x, slot.building.y);
-			}
 		}
 	}
 
@@ -139,7 +136,7 @@ public class ViewLocation implements Drawable{
 			int bldgMidY = getBldgPlatform(building,bldgImg, slot);
 			
 			int x = slotMidX - (bldg.getWidth()  / 2);
-			int y = slotMidY - (bldg.getHeight()  / 2);
+			int y = (slot.y + slot.height) - (bldg.getHeight());
 			slot.setBuilding(new ViewBuilding(bldg, x, y));
 		}
 	}
@@ -159,12 +156,12 @@ public class ViewLocation implements Drawable{
 		
 		switch(bldg.getName()){
 		case "tower":
-			return buildings.get(2);
+			return buildings.get(1);
 		case "goldmine":
 			return buildings.get(3);
 		default:
 			System.out.println("ERROR: Unrecognized building");
+			return buildings.get(0);
 		}
-		return null;
 	}
 }
