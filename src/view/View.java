@@ -1,37 +1,23 @@
 package view;
 
 import gameObjects.Building;
+import gameObjects.LocationNode;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-//import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-//import java.awt.Canvas;
-//import java.awt.Color;
-//import java.awt.Graphics;
-//import java.awt.Graphics2D;
-//import java.awt.Image;
-//import java.awt.image.BufferedImage;
-//import java.io.File;
-//import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.Collections;
-//import java.util.ConcurrentModificationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
 //import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+//import javax.swing.JFrame;
+//import javax.swing.JPanel;
+
+
+
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -39,8 +25,9 @@ import model.Model;
 import model.manager.Kappa;
 
 public class View extends BasicGame {
-
-	Thread t;
+	
+	final int KINGDOM_WIDTH = 16*16;
+	final int KINGDOM_HEIGHT = 18*20;
 
 	String currMsg;
 	int board[][];
@@ -52,7 +39,7 @@ public class View extends BasicGame {
 	// JPanel myPanel;
 
 	List<Kappa> kappaList;
-	List<Building> buildingList;
+	List<Building> modelBuildings;
 
 	// graphics
 	ArrayList<Image> buildings;
@@ -67,51 +54,22 @@ public class View extends BasicGame {
 	Image wallLowerRightCorner;
 	Image redTank;
 	Image greenTank;
-
+	
+	ViewLocation team1;
+	
 	Random rand;
 	public View(Model myModel) {
 		super("Drunken Democracy");
 		this.myModel = myModel;
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
-	public void render(GameContainer arg0, org.newdawn.slick.Graphics arg1)
+	public void render(GameContainer arg0, Graphics arg1)
 			throws SlickException {
 		// TODO Auto-generated method stub
 		arg1.drawString(currMsg, 100, 100);
 		drawGround();
-		buildings.get(0).draw(100, 100);
-		buildings.get(1).draw(200, 100);
-		buildings.get(2).draw(300, 100);
-		buildings.get(3).draw(400, 100);
-
-		wallLeftRight.draw(100, 300);
-		wallLeftRight.draw(116, 300);
-		wallLeftRight.draw(132, 300);
-
-		wallUpperRightCorner.draw(148, 300);
-
-		wallUpDown.draw(148, 328);
-		wallUpDown.draw(148, 346);
-		wallUpDown.draw(148, 364);
-
-		wallLowerRightCorner.draw(148, 382);
-
-		wallLeftRight.draw(132, 382);
-		wallLeftRight.draw(116, 382);
-		wallLeftRight.draw(100, 382);
-
-		wallLowerLeftCorner.draw(84, 382);
-
-		wallUpDown.draw(84, 328);
-		wallUpDown.draw(84, 346);
-		wallUpDown.draw(84, 364);
-
-		wallUpperLeftCorner.draw(84, 300);
-
-		redTank.draw(200, 200);
-		greenTank.draw(100, 200);
+		team1.draw();
 	}
 
 	/*
@@ -191,6 +149,7 @@ public class View extends BasicGame {
 		// clinic?
 		buildings.add(sprites.getSubImage(104, 178, 32, 38));
 
+		// walls
 		wallLeftRight = sprites.getSubImage(160, 262, 16, 26);
 		wallUpDown = sprites.getSubImage(144, 200, 16, 18);
 		wallWatchtower = sprites.getSubImage(176, 256, 16, 32);
@@ -203,6 +162,14 @@ public class View extends BasicGame {
 		 */
 		wallLowerLeftCorner = sprites.getSubImage(144, 294, 16, 28);
 		wallLowerRightCorner = sprites.getSubImage(192, 294, 16, 28);
+		
+		Image[] walls = {wallLeftRight, wallUpDown, wallUpperLeftCorner, wallUpperRightCorner,
+				wallLowerLeftCorner, wallLowerRightCorner};
+		
+		LocationNode loc = myModel.getLocation();
+		
+		team1 = new ViewLocation(100, 100, KINGDOM_WIDTH, KINGDOM_HEIGHT, walls, loc.getBuildingSlots(),
+								buildings.get(0), loc);
 
 		redTank = new Image("graphics/redTank.png");
 		greenTank = new Image("graphics/greenTank.png");
@@ -220,9 +187,10 @@ public class View extends BasicGame {
 	}
 
 	@Override
-	public void update(GameContainer arg0, int arg1) throws SlickException {
+	public synchronized void update(GameContainer arg0, int arg1) throws SlickException {
 		// TODO Auto-generated method stub
-//		builtList = this.myGame.getBuilt();
+		modelBuildings = this.myModel.getBuildingsForDrawing();
+		team1.updateBuildings(modelBuildings, this.buildings);
 	}
 
 }

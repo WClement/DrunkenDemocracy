@@ -56,7 +56,7 @@ public class BuildManager extends Manager {
 				built.add(curr); // add to built buildings
 				iterator.remove(); // remove from inProgress list
 			} else { // report current progress
-				System.out.println("Added progress to " + curr.getName() + ".");
+//				System.out.println("Added progress to " + curr.getName() + ".");
 				String currProgress = curr.printProgressPretty();
 				if (!currProgress.equals("")) {
 					getMyModel().sendChatMessage(currProgress);
@@ -76,7 +76,10 @@ public class BuildManager extends Manager {
 				System.out.println("Now building: " + newBuilding.getName());
 				getMyModel().sendChatMessage("Now building: " + newBuilding.getName());
 				inProgress.add(newBuilding);
-				newBuilding.setLocation(getMyModel().mapManager.getKingdomLocation(kingdomIndex));
+				LocationNode loc = getMyModel().mapManager.getKingdomLocation(kingdomIndex);
+				
+				newBuilding.setLocation(loc);
+				loc.addBuilding(newBuilding);
 				newBuilding.construct();
 			}
 		}

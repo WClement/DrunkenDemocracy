@@ -1,6 +1,7 @@
 package model;
 
 import gameObjects.Building;
+import gameObjects.LocationNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +133,10 @@ public class Model {
 	// TEMPORARY
 	public List<Building> getBuildingsForDrawing() {
 		return buildManager.getBuiltList();
+	}
+	
+	public LocationNode getLocation(){
+		return mapManager.getKingdomLocation(0);
 	}
 	
 	// TEMPORARY

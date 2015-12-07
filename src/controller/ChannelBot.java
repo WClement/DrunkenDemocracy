@@ -106,7 +106,7 @@ public class ChannelBot {
 	 * NOTE: only works in my channel to prevent getting banned!
 	 * * * * * * * * * * * * * * * * * * * * * * * */
 	public void sendMessage(String message) {
-		if (channel.equals("jimmynojohns")) {
+		if (channel.equals("jimmynojohns") || channel.equals("ronald_regin")) {
 			myBot.send().message("#" + channel, message);
 		}
 	}

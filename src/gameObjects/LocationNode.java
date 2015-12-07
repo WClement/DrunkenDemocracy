@@ -23,6 +23,7 @@ public class LocationNode {
 	
 	public LocationNode() {
 		buildings = new ArrayList<Building>(MAX_BUILDINGS);
+		buildingSlots = MAX_BUILDINGS;
 	}
 	
 	public void setId(int id) {
