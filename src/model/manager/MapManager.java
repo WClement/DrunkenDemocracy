@@ -32,11 +32,16 @@ public class MapManager extends Manager {
 		
 		LocationNode kingdomNode;
 		LocationNode awayNode;
+		LocationNode extra1;
+		LocationNode extra2;
 
 		// create two nodes and join them with a track
 		kingdomNode = currentMap.newLocationNode();
 		awayNode = currentMap.newLocationNode();
 		currentMap.newTrack(kingdomNode, awayNode);
+		
+		extra1 = currentMap.newLocationNode();
+		extra2 = currentMap.newLocationNode();
 		
 		firstKingdom.setMyLocation(kingdomNode);
 		

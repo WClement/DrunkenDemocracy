@@ -1,9 +1,9 @@
 package view;
 
 import gameObjects.Building;
-
 import gameObjects.Kingdom;
 import gameObjects.LocationNode;
+import gameObjects.Track;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import java.util.Random;
 //import javax.imageio.ImageIO;
 //import javax.swing.JFrame;
 //import javax.swing.JPanel;
+
 
 import org.newdawn.slick.BasicGame;
 
@@ -58,6 +59,7 @@ public class View extends BasicGame {
 	Image greenTank;
 	
 	ArrayList<ViewLocation> locs;
+	ArrayList<ViewTrack> tracks;
 	
 	Random rand;
 	public View(Model myModel) {
@@ -147,6 +149,12 @@ public class View extends BasicGame {
 		coords.add(800);
 		coords.add(100);
 		
+		coords.add(100);
+		coords.add(400);
+		
+		coords.add(800);
+		coords.add(400);
+		
 		for(int i = 0; i < loc.size(); i++){
 			LocationNode node = loc.get(i);
 			locs.add(new ViewLocation(coords.get(2*i), coords.get(2*i+1), walls, node.getBuildingSlots(), buildings.get(0), node));
@@ -176,5 +184,4 @@ public class View extends BasicGame {
 			loc.updateBuildings(modelBuildings, this.buildings);
 		}
 	}
-
 }

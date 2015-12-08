@@ -12,6 +12,7 @@ public class ViewThread implements Runnable {
 			app = new AppGameContainer(theView);
 			app.setDisplayMode(1366, 768, false);
 	        app.setShowFPS(false);
+	        app.setAlwaysRender(true);
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
