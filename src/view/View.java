@@ -59,7 +59,6 @@ public class View extends BasicGame {
 	Image greenTank;
 	
 	ArrayList<ViewLocation> locs;
-	ArrayList<ViewTrack> tracks;
 	
 	Random rand;
 	public View(Model myModel) {
