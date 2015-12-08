@@ -34,8 +34,8 @@ public class DrunkenDemocracy {
 		theController.start();
 		System.out.println("Starting Game");
 		theModel.start();
-		//vthread = new ViewThread(theView);
-		//vthread.start();
+		vthread = new ViewThread(theView);
+		vthread.start();
 	}
 	
 	

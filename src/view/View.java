@@ -1,27 +1,27 @@
 package view;
 
 import gameObjects.Building;
-import gameObjects.Kappa;
+
+import gameObjects.Kingdom;
 import gameObjects.LocationNode;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
 //import javax.imageio.ImageIO;
 //import javax.swing.JFrame;
 //import javax.swing.JPanel;
 
-
-
-
-
 import org.newdawn.slick.BasicGame;
+
+import java.awt.Font;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 
 import model.Model;
 
@@ -39,8 +39,9 @@ public class View extends BasicGame {
 	// JFrame myFrame;
 	// JPanel myPanel;
 
-	List<Kappa> kappaList;
 	List<Building> modelBuildings;
+	
+	List<Kingdom> kingdoms;
 
 	// graphics
 	ArrayList<Image> buildings;
@@ -56,65 +57,34 @@ public class View extends BasicGame {
 	Image redTank;
 	Image greenTank;
 	
-	ViewLocation team1;
+	ArrayList<ViewLocation> locs;
 	
 	Random rand;
 	public View(Model myModel) {
 		super("Drunken Democracy");
 		this.myModel = myModel;
+		locs = new ArrayList<ViewLocation>();
+		kingdoms = new ArrayList<Kingdom>();
 	}
 	
 	@Override
 	public void render(GameContainer arg0, Graphics arg1)
 			throws SlickException {
 		// TODO Auto-generated method stub
-		arg1.drawString(currMsg, 100, 100);
+		Font font = new Font("Verdana", Font.BOLD, 32);
+		TrueTypeFont ttf = new TrueTypeFont(font, true);
+//		arg1.drawString(currMsg, 100, 100);
+		String gold = "" + myModel.kingdomManager.getKingdomGold(0);
+		
 		drawGround();
-		team1.draw();
-	}
-
-	/*
-<<<<<<< HEAD
-	public void update() {
-		if (!kappaList.equals(myModel.getKappas())) {
-			kappaList = myModel.getKappas();
-		}
-		if (!buildingList.equals(myModel.getBuildingsForDrawing())) {
-			buildingList = myModel.getBuildingsForDrawing();
+		for(int i = 0; i < locs.size(); i++){
+			ViewLocation loc = locs.get(i);
+			loc.draw();
+			ttf.drawString(loc.startX - 10, loc.height + 25, i + "");
 		}
 		
-		myPanel.repaint();
+		ttf.drawString(10, 10, "Kingdom 1: " + gold);
 	}
-
-	class MyPanel extends JPanel {
-		Model myKingdom;
-
-		public MyPanel(Model myModel) {
-			this.myKingdom = myModel;
-			setBackground(Color.GRAY);
-		}
-
-		File kappaFile = new File("Images/Kappa.png");
-		File buildingFile = new File("Images/ShibeZ.png");
-
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			if (kappaList != null) {
-				
-
-				for (int i = 0; i < kappaList.size(); i++) {
-					try {
-						g.drawImage(ImageIO.read(kappaFile), kappaList.get(i).getX(),
-								kappaList.get(i).getY(), 50, 50, null);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
-				}
-				
-=======
-*/
 
 	private void drawGround() {
 		// TODO Auto-generated method stub
@@ -167,9 +137,20 @@ public class View extends BasicGame {
 		Image[] walls = {wallLeftRight, wallUpDown, wallUpperLeftCorner, wallUpperRightCorner,
 				wallLowerLeftCorner, wallLowerRightCorner};
 		
-		LocationNode loc = myModel.getLocation();
+		ArrayList<LocationNode> loc = myModel.mapManager.getLocations();
 		
-		team1 = new ViewLocation(100, 100, walls, loc.getBuildingSlots(), buildings.get(0), loc);
+		/* real janky shit */
+		ArrayList<Integer> coords = new ArrayList<Integer>();
+		coords.add(100);
+		coords.add(100);
+		
+		coords.add(800);
+		coords.add(100);
+		
+		for(int i = 0; i < loc.size(); i++){
+			LocationNode node = loc.get(i);
+			locs.add(new ViewLocation(coords.get(2*i), coords.get(2*i+1), walls, node.getBuildingSlots(), buildings.get(0), node));
+		}
 
 		redTank = new Image("graphics/redTank.png");
 		greenTank = new Image("graphics/greenTank.png");
@@ -190,7 +171,10 @@ public class View extends BasicGame {
 	public synchronized void update(GameContainer arg0, int arg1) throws SlickException {
 		// TODO Auto-generated method stub
 		modelBuildings = this.myModel.getBuildingsForDrawing();
-		team1.updateBuildings(modelBuildings, this.buildings);
+		for(int i = 0; i < locs.size(); i++){
+			ViewLocation loc = locs.get(i);
+			loc.updateBuildings(modelBuildings, this.buildings);
+		}
 	}
 
 }
