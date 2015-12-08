@@ -81,10 +81,10 @@ public class View extends BasicGame {
 		for(int i = 0; i < locs.size(); i++){
 			ViewLocation loc = locs.get(i);
 			loc.draw();
-			arg1.drawString(i + "", loc.height, loc.startX);
+			arg1.drawString(i + "", loc.startX, loc.height + 30);
 		}
 		
-		arg1.drawString("Kingdom 1: " + gold, 10, 10);
+		arg1.drawString("Kingdom 1: " + gold + " gold", 10, 10);
 	}
 
 	private void drawGround() {
