@@ -38,7 +38,7 @@ public class BuildManager extends Manager {
 		if (buildTimer >= 60) { // check for command every 60 frames
 			if (executeNextReceiverCommand())
 				buildTimer = 0;
-		} 
+		}
 
 		// add progress to existing buildings and finish buildings
 		for (Iterator<Building> iterator = inProgress.iterator(); iterator

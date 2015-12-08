@@ -1,6 +1,7 @@
 package view;
 
 import gameObjects.Building;
+import gameObjects.Kappa;
 import gameObjects.LocationNode;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.Random;
 
 
 
+
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -22,7 +24,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import model.Model;
-import model.manager.Kappa;
 
 public class View extends BasicGame {
 	

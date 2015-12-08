@@ -1,6 +1,7 @@
 package model;
 
 import gameObjects.Building;
+import gameObjects.Kappa;
 import gameObjects.LocationNode;
 
 import java.util.ArrayList;
@@ -8,16 +9,17 @@ import java.util.List;
 
 import model.manager.AttackManager;
 import model.manager.BuildManager;
-import model.manager.Kappa;
 import model.manager.KappaManager;
 import model.manager.KingdomManager;
 import model.manager.KreygasmManager;
 import model.manager.MapManager;
+import model.manager.UnitManager;
 import model.manager.VoteManager;
 import model.receiver.AttackReceiver;
 import model.receiver.BuildReceiver;
 import model.receiver.KappaReceiver;
 import model.receiver.KreygasmReceiver;
+import model.receiver.UnitReceiver;
 import model.receiver.VoteReceiver;
 import view.View;
 import controller.Controller;
@@ -37,6 +39,7 @@ public class Model {
 	BuildReceiver buildReceiver;
 	KreygasmReceiver kreyReceiver;
 	VoteReceiver voteReceiver;
+	UnitReceiver unitReceiver;
 	
 	// managers for commands
 	public BuildManager buildManager;
@@ -46,6 +49,7 @@ public class Model {
 	public AttackManager attackManager;
 	public MapManager mapManager;
 	public KingdomManager kingdomManager;
+	public UnitManager unitManager;
 	
 	// game timer
 	TimedExecutor time;
@@ -61,16 +65,16 @@ public class Model {
 		attackManager = new AttackManager(this);
 		mapManager = new MapManager(this);
 		kingdomManager = new KingdomManager(this);
+		unitManager = new UnitManager(this);
 				
 		kappaReceiver = new KappaReceiver(kappaManager);
 		attackReceiver = new AttackReceiver(attackManager);
 		buildReceiver = new BuildReceiver(buildManager); // also sets manager's receiver
 		kreyReceiver = new KreygasmReceiver(kreyManager);
 		voteReceiver = new VoteReceiver(voteManager);
-		
+		unitReceiver = new UnitReceiver(unitManager);
 		
 		time = new TimedExecutor(this);
-		
 	}
 	
 	public void startNewGame() {
@@ -124,6 +128,9 @@ public class Model {
 		case VOTE:
 			voteReceiver.addCommand(cmd);
 			break;
+		case UNIT:
+			System.out.println("Unit cmd detected");
+			unitReceiver.addCommand(cmd);
 		default:
 			break;
 		}
@@ -135,6 +142,7 @@ public class Model {
 		buildManager.manage();
 		kappaManager.manage();
 		kingdomManager.manage();
+		unitManager.manage();
 	}
 	
 

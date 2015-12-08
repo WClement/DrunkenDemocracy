@@ -1,4 +1,4 @@
-package model.manager;
+package gameObjects;
 
 public class Kappa {
 

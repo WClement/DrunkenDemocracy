@@ -20,7 +20,8 @@ public enum CommandEnum {
 	VOTE ("V:", VoteCommand.class),
 	ATTACK ("A:", AttackCommand.class),
 	KREYGASM ("Kreygasm", KreygasmCommand.class),
-	KAPPA ("Kappa", KappaCommand.class);
+	KAPPA ("Kappa", KappaCommand.class),
+	UNIT ("U:", UnitCommand.class);
 	
 	
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

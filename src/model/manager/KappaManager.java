@@ -1,5 +1,7 @@
 package model.manager;
 
+import gameObjects.Kappa;
+
 import java.util.ArrayList;
 import java.util.List;
 
