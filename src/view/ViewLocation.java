@@ -45,6 +45,9 @@ public class ViewLocation implements Drawable{
 		this.slots = new ArrayList<ViewSlot>(slots);
 		this.loc = loc;
 		setSlots(slots);
+		
+//		System.out.println(width);
+//		System.out.println(height);
 	}
 	
 	public void setSlots(int slots){
@@ -124,6 +127,8 @@ public class ViewLocation implements Drawable{
 		Image bldg;
 		for (int i = 0; i < modelBuildings.size(); i++){
 			Building building = modelBuildings.get(i);
+			if (!building.getLocation().equals(this.loc))
+				continue;
 			int index = building.getLocationIndex();
 			ViewSlot slot = slots.get(index);
 			
