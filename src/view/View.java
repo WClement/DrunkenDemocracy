@@ -73,8 +73,8 @@ public class View extends BasicGame {
 	public void render(GameContainer arg0, Graphics arg1)
 			throws SlickException {
 		// TODO Auto-generated method stub
-		Font font = new Font("Verdana", Font.BOLD, 32);
-		TrueTypeFont ttf = new TrueTypeFont(font, true);
+//		Font font = new Font("Verdana", Font.BOLD, 32);
+//		TrueTypeFont ttf = new TrueTypeFont(font, true);
 //		arg1.drawString(currMsg, 100, 100);
 		String gold = "" + myModel.kingdomManager.getKingdomGold(0);
 		
@@ -82,10 +82,10 @@ public class View extends BasicGame {
 		for(int i = 0; i < locs.size(); i++){
 			ViewLocation loc = locs.get(i);
 			loc.draw();
-			ttf.drawString(loc.startX - 10, loc.height + 25, i + "");
+			arg1.drawString(i + "", loc.height, loc.startX);
 		}
 		
-		ttf.drawString(10, 10, "Kingdom 1: " + gold);
+		arg1.drawString("Kingdom 1: " + gold, 10, 10);
 	}
 
 	private void drawGround() {
@@ -103,7 +103,6 @@ public class View extends BasicGame {
 		// TODO Auto-generated method stub
 		board = new int[arg0.getWidth() / 48][arg0.getHeight() / 48];
 		groundImg = new Image[arg0.getWidth() / 32 + 1][arg0.getHeight() / 34 + 1];
-		currMsg = "";
 
 		Image sprites = new Image("graphics/colony_0.png");
 		ground = new ArrayList<Image>(2);
@@ -160,9 +159,10 @@ public class View extends BasicGame {
 			locs.add(new ViewLocation(coords.get(2*i), coords.get(2*i+1), walls, node.getBuildingSlots(), buildings.get(0), node));
 		}
 
-		redTank = new Image("graphics/redTank.png");
-		greenTank = new Image("graphics/greenTank.png");
+//		redTank = new Image("graphics/redTank.png");
+//		greenTank = new Image("graphics/greenTank.png");
 
+//		sprites.endUse();
 	}
 
 	private void initGround() {
