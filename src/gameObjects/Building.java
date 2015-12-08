@@ -9,6 +9,7 @@ public abstract class Building {
 	public int maxBuildingProgress; // max building progress
 	public int goldCost; // initial cost in gold
 	public String team; // team (for colors and damage)
+	public int teamId; // team id
 	public int baseIncome; // base income!
 	public int baseDamage; // base damage 
 	
@@ -25,7 +26,7 @@ public abstract class Building {
 	private int location; // location in location node for ordering
 	private LocationNode myLoc; // my location node
 	private int locationIndex;
-	
+	private int income;
 	
 	public Building(String name, int maxProgress) {
 		this.name = name;
@@ -41,6 +42,7 @@ public abstract class Building {
 		this.baseIncome = b.baseIncome;
 		this.baseDamage = b.baseDamage;
 		
+		income = baseIncome;
 		currentBuildingProgress = 0;
 	}
 	
@@ -151,5 +153,17 @@ public abstract class Building {
 			destroy();
 		}
 		return false;
+	}
+	
+	public void setTeamId(int id) {
+		this.teamId = id;
+	}
+	
+	public int getTeamId() {
+		return teamId;
+	}
+
+	public int currentIncome() {
+		return income;
 	}
 }

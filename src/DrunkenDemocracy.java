@@ -16,7 +16,7 @@ import controller.Controller;
 
 public class DrunkenDemocracy {
 	
-	static Model theGame;
+	static Model theModel;
 	static Controller theController;
 	static View theView;
 	static ViewThread vthread;
@@ -26,16 +26,16 @@ public class DrunkenDemocracy {
 	public static void main(String[] args) {
 		
 		theController = new Controller();
-		theGame = new Model();
-		theGame.addController(theController);
-		theView = new View(theGame);
+		theModel = new Model();
+		theModel.addController(theController);
+		theView = new View(theModel);
 //		theGame.setView(theView);
-		theController.init(theGame);
+		theController.init(theModel);
 		theController.start();
 		System.out.println("Starting Game");
-		theGame.start();
-		vthread = new ViewThread(theView);
-		vthread.start();
+		theModel.start();
+		//vthread = new ViewThread(theView);
+		//vthread.start();
 	}
 	
 	

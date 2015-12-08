@@ -8,41 +8,57 @@ import gameObjects.Kingdom;
 import gameObjects.LocationNode;
 import gameObjects.Map;
 
-public class MapManager extends Manager {
 
+/*
+ * MapManager:
+ * Manages the currentMap, as well as creating it
+ * Manages the list of Kingdoms
+ */
+public class MapManager extends Manager {	
+	
 	public MapManager(Model myModel) {
 		super(myModel);
 		// TODO Auto-generated constructor stub
 	}
 
 	Map currentMap;
-	ArrayList<Kingdom> kingdomList;
 	
 	public void createMap1() {
 		
 		currentMap = new Map();
-		kingdomList = new ArrayList<Kingdom>();
 		
-		Kingdom firstKingdom = new Kingdom();
+		// Get a kingdom from the kingdomManager
+		Kingdom firstKingdom = getMyModel().kingdomManager.createNewKingdom();
 		
 		LocationNode kingdomNode;
 		LocationNode awayNode;
 
+		// create two nodes and join them with a track
 		kingdomNode = currentMap.newLocationNode();
 		awayNode = currentMap.newLocationNode();
-		
 		currentMap.newTrack(kingdomNode, awayNode);
 		
 		firstKingdom.setMyLocation(kingdomNode);
 		
-		kingdomList.add(firstKingdom);
 	}
 	
 	public LocationNode getKingdomLocation(int kingdomId) {
-		if (kingdomList.get(kingdomId) != null) {
-			return kingdomList.get(kingdomId).getMyLocation();
+		if (getMyModel().kingdomManager.getKingdom(kingdomId) != null) {
+			return getMyModel().kingdomManager.getKingdom(kingdomId).getMyLocation();
 		}
 		return null;
+	}
+	
+	public ArrayList<LocationNode> getLocations() {
+		return currentMap.getLocationNodes();
+	}
+	
+	public LocationNode getLocation(int nodeId) {
+		return currentMap.getLocationNode(nodeId);
+	}
+
+	public Map getMap() {
+		return currentMap;
 	}
 
 	@Override
@@ -53,6 +69,12 @@ public class MapManager extends Manager {
 
 	@Override
 	public void executeCommand(ChatCommand cmd) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void incrementTimers() {
 		// TODO Auto-generated method stub
 		
 	}

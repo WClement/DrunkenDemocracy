@@ -19,6 +19,7 @@ public class Map {
 		locNode.setId(nodes.indexOf(locNode));
 	}
 	
+	// creates new node and adds it to the map
 	public LocationNode newLocationNode() {
 		LocationNode newNode = new LocationNode();
 		nodes.add(newNode);
@@ -55,6 +56,14 @@ public class Map {
 	
 	public void removeLocationNode(int index) {
 		nodes.remove(index);
+	}
+	
+	public ArrayList<LocationNode> getLocationNodes() {
+		return nodes;
+	}
+	
+	public ArrayList<Track> getTracks() {
+		return tracks;
 	}
 	
 }

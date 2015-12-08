@@ -15,6 +15,7 @@ public abstract class Manager {
 	
 	public abstract void manage(); // method called in timer loop for updates
 	public abstract void executeCommand(ChatCommand cmd);
+	public abstract void incrementTimers();
 	
 	public void setReceiver(CommandReceiver recv) {
 		this.setMyReceiver(recv);

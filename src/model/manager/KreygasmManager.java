@@ -22,4 +22,10 @@ public class KreygasmManager extends Manager {
 
 	}
 
+	@Override
+	public void incrementTimers() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

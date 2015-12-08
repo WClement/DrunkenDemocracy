@@ -1,6 +1,5 @@
-package model;
+package gameObjects;
 
-import gameObjects.Map;
 
 public class Game {
 

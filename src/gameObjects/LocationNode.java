@@ -10,6 +10,8 @@ public class LocationNode {
 	private int buildingSlots;
 	private int buildingCount = 0;
 	ArrayList<Building> buildings;
+	public String conqueredByTeam = "";
+	public int conqueredByTeamId = 0;
 	
 	public int id;
 	

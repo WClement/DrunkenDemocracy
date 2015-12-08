@@ -10,6 +10,7 @@ import model.manager.AttackManager;
 import model.manager.BuildManager;
 import model.manager.Kappa;
 import model.manager.KappaManager;
+import model.manager.KingdomManager;
 import model.manager.KreygasmManager;
 import model.manager.MapManager;
 import model.manager.VoteManager;
@@ -44,6 +45,7 @@ public class Model {
 	public VoteManager voteManager;
 	public AttackManager attackManager;
 	public MapManager mapManager;
+	public KingdomManager kingdomManager;
 	
 	// game timer
 	TimedExecutor time;
@@ -58,8 +60,8 @@ public class Model {
 		voteManager = new VoteManager(this);
 		attackManager = new AttackManager(this);
 		mapManager = new MapManager(this);
-		mapManager.createMap1();
-		
+		kingdomManager = new KingdomManager(this);
+				
 		kappaReceiver = new KappaReceiver(kappaManager);
 		attackReceiver = new AttackReceiver(attackManager);
 		buildReceiver = new BuildReceiver(buildManager); // also sets manager's receiver
@@ -69,6 +71,10 @@ public class Model {
 		
 		time = new TimedExecutor(this);
 		
+	}
+	
+	public void startNewGame() {
+		mapManager.createMap1();
 	}
 	
 	public void addController(Controller toAdd) {
@@ -87,6 +93,7 @@ public class Model {
 	
 	public void start() {
 		time.start();
+		startNewGame();
 	}
 	
 	public void sendChatMessage(String msg, int controllerId) {
@@ -127,6 +134,7 @@ public class Model {
 	public void manageManagers() {
 		buildManager.manage();
 		kappaManager.manage();
+		kingdomManager.manage();
 	}
 	
 
@@ -143,5 +151,4 @@ public class Model {
 	public List<Kappa> getKappas() {
 		return kappaManager.getKappaList();
 	}
-	
 }

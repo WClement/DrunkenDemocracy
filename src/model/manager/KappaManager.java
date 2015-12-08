@@ -52,6 +52,12 @@ public class KappaManager extends Manager {
 		getMyModel().sendChatMessage("Wow Kappa", cmd.getControllerId());
 		createKappa();
 	}
+
+	@Override
+	public void incrementTimers() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 
